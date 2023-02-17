@@ -38,7 +38,9 @@ exit 1
 fi
 
 ## SOURCE_CONFIG.SH ##
+if [[ $1 == "source" || $1 == "export" ]];then
 $*
+fi
 ######################
 
 # 帮助信息

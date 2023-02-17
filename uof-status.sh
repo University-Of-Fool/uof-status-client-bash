@@ -39,6 +39,26 @@ fi
 $*
 ######################
 
+# 帮助信息
+if [[ $1 == "-h" || $1 =="--help" ]];then
+cat << EOF
+Usage:
+
+$0
+Start running status upload.
+
+$0  -h --help
+--Displays help information.
+
+$0  [-i or --init] [Api.global_token] [client-name] [description] 
+--Configure this script.
+
+$0  [-d or --drop] [Api.global_token] [client-id]
+--Remove this client from the server.
+
+EOF
+exit 0
+fi
 # 获取服务器列表
 GET_LIST() {
 curl -X GET "$_SERVER_IP/api/server/get"
@@ -52,7 +72,7 @@ GET_LIST || echo -e "\033[31mERROT:Can't connect to main server.\033[0m" & exit 
 # 初始化
 __TEMP=$(mktemp)
 if [[ $1 == "-i" || $1 == "--init" ]];then
-curl -X POST $_SERVER_IP/api/server/put << EOF > __TEMP
+curl -X POST $_SERVER_IP/api/server/put << EOF > $__TEMP
 
 {
     "token":"$2",
@@ -60,6 +80,8 @@ curl -X POST $_SERVER_IP/api/server/put << EOF > __TEMP
     "description": "$4"
 }
 EOF
+
+
 # 删除服务器
 if [[ $1 == "-d" || $1 == "--drop" ]];then
 curl -X POST $_SERVER_IP/api/server/drop << EOF

@@ -9,9 +9,10 @@ https://github.com/University-Of-Fool/uof-status
 
 1. 确保curl已安装
 
-2. 下载此脚本
+2. 克隆此项目
 ```
-curl -O https://raw.githubusercontent.com/University-Of-Fool/uof-status-client-bash/main/uof-status.sh
+git clone https://github.com/University-Of-Fool/uof-status-client-bash.git
+cd uof-status-client-bash
 ```
 
 3. 编辑脚本，更改以下部分

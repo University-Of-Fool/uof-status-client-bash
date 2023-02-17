@@ -65,6 +65,7 @@ fi
 # 获取服务器列表
 GET_LIST() {
 curl -X GET "$_SERVER_IP/api/server/get"
+return $?
 }
 # 检测主服务器状态,遇到错误请注释
 GET_LIST

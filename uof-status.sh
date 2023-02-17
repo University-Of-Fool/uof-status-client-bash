@@ -48,6 +48,6 @@ GET_STAT() {
 curl -X GET "$_serverIP/api/status/get/$_id"
 }
 # 检测主服务器状态,遇到错误请注释
-GET_LIST || echo -e "\033[33mERROT:Can't connect to main server.\033[0m" & exit 1
+GET_LIST || echo -e "\033[31mERROT:Can't connect to main server.\033[0m" & exit 1
 # 新增服务器
 if [[ $1 == "-i" || $1 == "--init" ]];then

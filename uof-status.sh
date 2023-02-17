@@ -66,12 +66,12 @@ fi
 GET_LIST() {
 curl -X GET "$_SERVER_IP/api/server/get"
 }
-# 获取状态信息
-GET_STAT() {
-curl -X GET "$_SERVER_IP/api/status/get/$_ID"
-}
 # 检测主服务器状态,遇到错误请注释
-GET_LIST || echo -e "\033[31mERROT:Can't connect to main server.\033[0m" & exit 1
+GET_LIST
+if [[ $? -ne 0 ]];then
+echo -e "\033[31mERROT:Can't connect to main server.\033[0m"
+exit 1
+fi
 
 # 初始化
 if [[ $1 == "-i" || $1 == "--init" ]];then
@@ -100,8 +100,7 @@ exit 0
 fi
 
 # 开始检测状态并上传
-__RUN=true
-while [[ $__RUN == "true" ]]
+while [[ 1 -eq 1 ]];
 do
 curl -X POST $_SERVER_IP/api/status/put <<EOF
 
@@ -110,6 +109,7 @@ curl -X POST $_SERVER_IP/api/status/put <<EOF
     "token": "$_TOKEN",
     "online": "$_STATUS"
 }
-GET_STAT()
-sleep $_INTERVAL
+EOF
+curl -X GET "$_SERVER_IP/api/status/get/$_ID" && echo success || echo error
+sleep "$_INTERVAL" & date
 done

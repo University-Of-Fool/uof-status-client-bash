@@ -26,13 +26,11 @@ _SERVER_IP="http://127.0.0.1:4044"
 ##### Config_END #####
 
 # Check CURL
-curl 2>&1 >/dev/null
+hash curl 2>&1 >/dev/null
 if [[ $? -ne 0 ]];then
 cat << EOF
-\033[31m
 Please make sure "curl" has installed.
 Then restart the scripts.
-\033[0m
 EOF
 exit 1
 fi
@@ -44,12 +42,12 @@ fi
 ######################
 
 # 帮助信息
-if [[ $1 == "-h" || $1 =="--help" ]];then
+if [[ $1 == "-h" || $1 == "--help" ]];then
 cat << EOF
 Usage:
 
 $0
-Start running status upload.
+--Start running status upload.
 
 $0  -h --help
 --Displays help information.

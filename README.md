@@ -1,3 +1,5 @@
+# 未经过测试的屎山，暂时不建议使用
+
 # uof-status-client-bash
 A client of uof-status written in Bash
 

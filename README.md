@@ -3,7 +3,7 @@ A client of uof-status written in Bash
 
 https://github.com/University-Of-Fool/uof-status
 
-# 使用方法:
+# 配置方法:
 
 1. 确保curl已安装
 

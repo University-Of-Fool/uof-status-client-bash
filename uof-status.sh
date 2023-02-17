@@ -12,7 +12,7 @@
 _INTERVAL=60s
 
 # 回报状态类型（不需要更改）
-_STATUS=True
+_STATUS=true
 
 # Token (会自动生成)
 _TOKEN=
@@ -49,9 +49,10 @@ curl -X GET "$_SERVER_IP/api/status/get/$_id"
 }
 # 检测主服务器状态,遇到错误请注释
 GET_LIST || echo -e "\033[31mERROT:Can't connect to main server.\033[0m" & exit 1
-# 新增服务器
+# 初始化
+__TEMP=$(mktemp)
 if [[ $1 == "-i" || $1 == "--init" ]];then
-curl -X POST $_SERVER_IP/api/server/put << EOF
+curl -X POST $_SERVER_IP/api/server/put << EOF > __TEMP
 
 {
     "token":"$2",
@@ -59,3 +60,27 @@ curl -X POST $_SERVER_IP/api/server/put << EOF
     "description": "$4"
 }
 EOF
+# 删除服务器
+if [[ $1 == "-d" || $1 == "--drop" ]];then
+curl -X POST $_SERVER_IP/api/server/drop << EOF
+
+{
+    "token":"$2",
+    "serverId":"$_ID"
+}
+EOF
+exit 0
+fi
+# 开始检测状态并上传
+__RUN=true
+while [[ $__RUN == "true" ]]
+do
+curl -X POST $_SERVER_IP/api/status/put <<EOF
+
+{
+    "serverId": "$_ID",
+    "token": "$_TOKEN",
+    "online": "$_STATUS"
+}
+sleep $_INTERVAL
+done
